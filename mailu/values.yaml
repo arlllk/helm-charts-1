@@ -32,6 +32,12 @@ tolerations: {}
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
+# Name of the Server
+siteName: Mailu
+
+# Linked Website URL (By default is the first in the hostnames)
+# websiteOverride: https://mailu.io
+
 database:
   # type of the database for mailu (sqlite or mysql)
   # default database is an embedded sqlite

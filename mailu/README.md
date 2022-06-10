@@ -21,7 +21,7 @@ Branches exists for older mailu versions (e.g. old/mailu-1.8).
 
 ### Warning about open relays
 
-One of the biggest mistakes when running a mail server is a so called "Open Relay". This this kind of misconfiguration is in most cases caused by a badly configured
+One of the biggest mistakes when running a mail server is a so called "Open Relay". This kind of misconfiguration is in most cases caused by a badly configured
 load balancer which hides the originating IP address of an email which makes Mailu think, the email comes from an internal address and ommits authentification and other checks. In the result, your mail server can be abused to spread spam and will get blacklisted within hours.
 
 It is very important that you check your setup for open relay at least:
@@ -92,7 +92,7 @@ Check that the deployed pods are all running.
 ## Configuration
 | Parameter                         | Description                          | Default                                   |
 | --------------------------------- | ------------------------------------ | ----------------------------------------- |
-| `mailuVersion`                    | Version/tag of mailu images - must be master or a version >=1.9 | `master`                                  |
+| `mailuVersion`                    | Version/tag of mailu images - must be master or a version >=1.9 | `master`       |
 | `logLevel`                        | Level of logging                     | `WARNING`                                 |
 | `nameOverride`                    | Override the resource name prefix    | `mailu`                                   |
 | `clusterDomain`                   | Change the cluster DNS root          | `cluster.local`                           |
@@ -102,6 +102,8 @@ Check that the deployed pods are all running.
 | `postmaster`                      | Local part of the postmaster address | `postmaster`                              |
 | `passwordScheme`                  | Scheme used to hash passwords        | `PBKDF2`                                  |
 | `secretKey`                       | Session encryption key for admin and webmail | not set                           |
+| `secretKeyRef.name`               | Name of the Secret to fetch the secret key from | not set                        |
+| `secretKeyRef.key`                | The name of the key storing the secret key   | not set                           |
 | `subnet`                          | Subnet of PODs, used to configure from which IPs internal requests are allowed | `10.42.0.0/16` |
 | `mail.messageSizeLimitInMegabytes`| Message size limit in Megabytes      | `50`                                      |
 | `mail.authRatelimit`              | Rate limit for authentication requests | `10/minute;1000/hour`                   |
@@ -112,20 +114,20 @@ Check that the deployed pods are all running.
 | `certmanager.enabled`             | Enable the use of CertManager to generate secrets         | `ClusterIssuer`      |
 | `certmanager.issuerType`          | Issuer type for cert manager         | `ClusterIssuer`                           |
 | `certmanager.issuerName`          | Name of a preconfigured cert issuer  | `letsencrypt`                             |
-| `certmanager.apiVersion`          | API-Version for certmanager CRDs     | `cert-manager.io/v1alpha2`                |
+| `certmanager.apiVersion`          | API-Version for certmanager CRDs     | `cert-manager.io/v1`                      |
 | `persistence.size`                | requested PVC size                   | `100Gi`                                   |
 | `persistence.storageClass`        | storageClass to use for persistence  | not set                                   |
 | `persistence.accessMode`          | accessMode to use for persistence    | `ReadWriteOnce`                           |
-| `persistence.annotations`          | Annotations to use in the PVC.    | `{}`                           |
+| `persistence.annotations`         | Annotations to use in the PVC.       | `{}`                                      |
 | `persistence.hostPath`            | path of the hostPath persistence     | not set                                   |
 | `persistence.existingClaim`       | existing PVC                         | not set                                   |
 | `persistence.claimNameOverride`   | override the generated claim name    | not set                                   |
 | `webdav.enabled`                  | enable webdav server                 | `false`                                   |
 | `ingress.externalIngress`         | Use externally provided nginx        | `true`                                    |
 | `ingress.tlsFlavor`               | Do not change unless you have a custom way of generating the certificates. [Allowed options](https://mailu.io/1.7/compose/setup.html#tls-certificates)  | `cert` (uses certificates provided by cert-manager)                                   |
-| `ingress.annotations`               | Annotations for the ingress resource, if enabled. Useful e.g. for configuring the NGINX controller configuration.  | `nginx.ingress.kubernetes.io/proxy-body-size: "0"`                                   |
+| `ingress.annotations`             | Annotations for the ingress resource, if enabled. Useful e.g. for configuring the NGINX controller configuration.  | `nginx.ingress.kubernetes.io/proxy-body-size: "0"`                                   |
 | `ingress.realIpHeader`            | Header from http(s) ingress that contains the real client IP | `X-Forwarded-For` |
-| `ingress.realIpFrom`              | IP/Network from where `realIpHeader` is accepted | `0.0.0.0/0` |
+| `ingress.realIpFrom`              | IP/Network from where `realIpHeader` is accepted | `0.0.0.0/0`                   |
 | `roundcube.enabled`               | enable roundcube webmail             | `true`                                    |
 | `clamav.enabled`                  | enable clamav antivirus              | `true`                                    |
 | `dovecot.overrides`               | enable dovecot overrides             | not set                                   |
@@ -134,7 +136,7 @@ Check that the deployed pods are all running.
 | `database.type`                   | type of database used for mailu      | `sqlite`                                  |
 | `database.roundcubeType`          | type of database used for roundcube  | `sqlite`                                  |
 | `database.mysql.*`                | mysql specific settings, see below   | not set                                   |
-| `timezone`                        | time zone for PODs, see below        | not set                                 |
+| `timezone`                        | time zone for PODs, see below        | not set                                   |
 
 ### Example values.yaml to get started
 
